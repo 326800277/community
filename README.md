@@ -11,3 +11,19 @@
 
 ## 图解说明
 ![Image text](https://github.com/326800277/community/blob/master/img%20storage/QQ%E5%9B%BE%E7%89%8720190729235659.png)
+
+## 脚本
+```sql
+Create Table
+
+CREATE TABLE `user` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `account_id` varchar(100) DEFAULT NULL,
+  `name` varchar(50) DEFAULT NULL,
+  `token` char(36) DEFAULT NULL,
+  `gmt_create` bigint(20) DEFAULT NULL,
+  `gmt_modify` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) 
+
+```
