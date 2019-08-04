@@ -13,7 +13,9 @@ import weididi.community.community.dto.GithubUser;
 import weididi.community.community.mapper.UserMapper;
 import weididi.community.community.provider.GithubPrivoder;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.UUID;
 
@@ -37,14 +39,15 @@ public class AuthorizeController {
     @GetMapping("/callback")
     public String callback(@RequestParam(name="code")String code,
                            @RequestParam(name="state")String state,
-                           HttpServletRequest request) throws IOException {
+                           //HttpServletRequest request,
+                           HttpServletResponse response) throws IOException {
         AccessTokenDTO accessTokenDTO = new AccessTokenDTO();
         accessTokenDTO.setCode(code);
         accessTokenDTO.setState(state);
         accessTokenDTO.setClient_id(Client_id);
         accessTokenDTO.setClient_secret(Client_secret);
 //        这一行不要也行，这是再次设置一个回调函数
-        //accessTokenDTO.setRedirect_uri(Redirect_uri);
+        accessTokenDTO.setRedirect_uri(Redirect_uri);
 
 //        accessToken携带code访问https://github.com/login/oauth/access_token，返回一个访问令牌
         String accessToken = githubPrivoder.getAccessToken(accessTokenDTO);
@@ -56,10 +59,13 @@ public class AuthorizeController {
             User user = new User();
             user.setToken(UUID.randomUUID().toString());
             user.setAccountId(githubUser.getName());
+            user.setName(String.valueOf(githubUser.getId()));
             user.setGmtCreate(System.currentTimeMillis());
             user.setGmtModify(user.getGmtCreate());
             userMapper.insert(user);
-            request.getSession().setAttribute("user",githubUser);
+            //保存一个Cookie
+            response.addCookie(new Cookie("token",user.getToken()));
+            //request.getSession().setAttribute("user",githubUser);
             return "redirect:/";
         }else {
             //登录失败，重新登录
