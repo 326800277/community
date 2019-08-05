@@ -26,6 +26,24 @@ CREATE TABLE `user` (
   `gmt_modify` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) 
+
+
+Create Table
+
+CREATE TABLE `questionid` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `description` text,
+  `title` varchar(50) DEFAULT NULL,
+  `gmt_create` bigint(20) DEFAULT NULL,
+  `gmt_modify` bigint(20) DEFAULT NULL,
+  `creator_id` int(11) DEFAULT NULL,
+  `comment_count` int(11) DEFAULT '0',
+  `view_count` int(11) DEFAULT '0',
+  `like_count` int(11) DEFAULT '0',
+  `tag` varchar(256) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+)
+
 ```
 ```bash
 mvn flyway:migrate
