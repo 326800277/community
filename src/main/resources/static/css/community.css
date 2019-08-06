@@ -11,3 +11,14 @@ body{
     float: right;
     margin-bottom: 15px;
 }
+/*这个是将已经存在样样式复用，不影响其原来的样式*/
+.media-object{
+    width: 38px;
+    height: 38px;
+}
+
+.text_desc{
+    font-size: 12px;
+    font-weight: normal;
+    color: #999;
+}

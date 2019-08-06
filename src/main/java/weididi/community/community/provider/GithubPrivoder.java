@@ -46,7 +46,7 @@ public class GithubPrivoder {
         Response response = client.newCall(request).execute();
 //        得到一条关于用户信息的JSON数据
         String string = response.body().string();
-//        将JSON数据转换为对象
+//        将JSON数据转换为对象,只匹配GithubUser.class中存在的成员变量
         GithubUser githubUser = JSON.parseObject(string, GithubUser.class);
         return githubUser;
     }

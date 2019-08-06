@@ -6,9 +6,11 @@
 [Github deploy key](https://help.github.com/en)  
 [Bootstrap](https://v3.bootcss.com/components/#navbar-default)  
 [Github OAuth](https://developer.github.com/apps/building-oauth-apps/creating-an-oauth-app/)
+[thymeleaf帮助文档](https://www.thymeleaf.org/doc/tutorials/3.0/usingthymeleaf.html)
 ## 工具
 [Git](https://git-scm.com/)
 [flyway](https://flywaydb.org/getstarted/firststeps/maven)
+[lombok](https://www.projectlombok.org/features/all)
 
 ## 图解说明
 ![Image text](https://github.com/326800277/community/blob/master/img%20storage/QQ%E5%9B%BE%E7%89%8720190729235659.png)
