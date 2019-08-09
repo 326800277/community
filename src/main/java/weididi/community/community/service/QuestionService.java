@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import weididi.community.community.domain.Question;
 import weididi.community.community.domain.User;
+import weididi.community.community.dto.PageNationDTO;
 import weididi.community.community.dto.QuestionDTO;
 import weididi.community.community.mapper.QuestionMapper;
 import weididi.community.community.mapper.UserMapper;
@@ -21,9 +22,25 @@ public class QuestionService {
     @Autowired
     private UserMapper userMapper;
 
-    public List<QuestionDTO> list() {
-        List<Question> questions = questionMapper.list();
+    public PageNationDTO list(Integer page, Integer size) {
+        //size*(page-1)分页当前在数据库全部数据中的停止位置
+
+        PageNationDTO pageNationDTO=new PageNationDTO();
+        //从数据库获取总共有多少条问题
+        Integer totalcount = questionMapper.count();
+        //解决输入错误页码的问题
+        if(page<1){
+            page=1;
+        }
+        if(page>((totalcount%size)==0?totalcount/size:totalcount/size+1)){
+            page=((totalcount%size)==0?totalcount/size:totalcount/size+1);
+        }
+        Integer offset=size*(page-1);
+        List<Question> questions = questionMapper.list(offset,size);
         List<QuestionDTO> questionDTOlist=new ArrayList<>();
+
+        pageNationDTO.setPagenation(totalcount,page,size);
+
         for(Question question:questions){
             //调试会出现无法读入，各种null的现象，这是由于书写不规范？需要 配置中mybatis.configuration.map-underscore-to-camel-case=true
             User user=userMapper.findById(question.getCreatorId());
@@ -33,6 +50,8 @@ public class QuestionService {
             questionDTO.setUser(user);
             questionDTOlist.add(questionDTO);
         }
-        return questionDTOlist;
+        pageNationDTO.setQuestions(questionDTOlist);
+
+        return pageNationDTO;
     }
 }

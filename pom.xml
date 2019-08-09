@@ -70,6 +70,12 @@
 			<version>1.18.8</version>
 			<scope>provided</scope>
 		</dependency>
+		<!--快速实现重启功能-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<optional>true</optional>
+		</dependency>
 	</dependencies>
 
 	<build>

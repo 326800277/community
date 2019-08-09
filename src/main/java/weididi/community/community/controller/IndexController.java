@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import weididi.community.community.domain.Question;
 import weididi.community.community.domain.User;
+import weididi.community.community.dto.PageNationDTO;
 import weididi.community.community.dto.QuestionDTO;
 import weididi.community.community.mapper.QuestionMapper;
 import weididi.community.community.mapper.UserMapper;
@@ -26,7 +27,9 @@ public class IndexController {
 //  要实现不重复登陆，登陆一次之后保留一个Cookie后，由Cookie信息完成登陆
     @GetMapping("/")
     public String index(HttpServletRequest request,
-                        Model model){
+                        Model model,
+                        @RequestParam(name="page",defaultValue = "1") Integer page,
+                        @RequestParam(name="size",defaultValue = "5") Integer size){
         Cookie[] cookies = request.getCookies();
         //防止Cookies空指针异常。
         if(cookies!=null) {
@@ -44,8 +47,8 @@ public class IndexController {
             }
         }
 //        获取带有Question和user相关信息的questionDTO的集合
-        List<QuestionDTO> questionList=questionService.list();
-        model.addAttribute( "questions",questionList);
+        PageNationDTO pageNations=questionService.list(page,size);
+        model.addAttribute( "pageNations",pageNations);
         return "index";
     }
 }
