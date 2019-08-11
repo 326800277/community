@@ -9,15 +9,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import weididi.community.community.domain.Question;
 import weididi.community.community.domain.User;
 import weididi.community.community.mapper.QuestionMapper;
-import weididi.community.community.mapper.UserMapper;
-
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class publishController {
-    @Autowired
-    private UserMapper userMapper;
 
     @Autowired
     private QuestionMapper questionMapper;
@@ -53,23 +48,9 @@ public class publishController {
             return "publish";
         }
 
-        Cookie[] cookies = request.getCookies();
-        User user = null;
-        //防止Cookies空指针异常。
-        if(cookies!=null) {
-            for (Cookie cookie : cookies) {
-                if ("token".equals(cookie.getName())) {
-                    String token = cookie.getValue();
-                    //在数据库中找到对应Cookie的用户信息
-                    user = userMapper.findByToken(token);
-                    if (user != null) {
-                        //将该用户丢到session域中，不用再次登陆
-                        request.getSession().setAttribute("user", user);
-                    }
-                    break;
-                }
-            }
-        }
+        //而在拦截器中在request中的session中保存了user，这里取出。
+        // 不是同一个对象，就算是拦截器也不能共用成员变量
+        User user = (User) request.getSession().getAttribute("user");
         Question question=new Question();
         //解决错误信息？？？？？？
         if(user==null){

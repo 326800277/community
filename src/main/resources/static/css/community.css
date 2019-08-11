@@ -1,3 +1,4 @@
+/*在引入了这个CSS样式后，直接在名为body的标签设定样式*/
 body{
     background-color:#bce8f1;
 }
@@ -21,4 +22,9 @@ body{
     font-size: 12px;
     font-weight: normal;
     color: #999;
+}
+
+/*相当于两个作用域，需要在一个大标签中样式填profile，其中小标签样式填section，.profile.section好像不行*/
+.section{
+    margin-top: 15px;
 }
