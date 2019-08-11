@@ -23,7 +23,7 @@ public class ProfileController {
                            Model model,
                            HttpServletRequest request,
                            @RequestParam(name="page",defaultValue = "1") Integer page,
-                           @RequestParam(name="size",defaultValue = "2") Integer size){
+                           @RequestParam(name="size",defaultValue = "5") Integer size){
         //因为要判断user==null，所以需要获得user，而在拦截器中在request中的session中保存了，这里取出。
         // 不是同一个对象，就算是拦截器也不能共用成员变量
         User user = (User) request.getSession().getAttribute("user");
@@ -31,8 +31,8 @@ public class ProfileController {
             return "redirect:/";
         }
 
-        if("question".equals(action)){
-            model.addAttribute("section","question");
+        if("questions".equals(action)){
+            model.addAttribute("section","questions");
             model.addAttribute("sectionName","我的问题");
         }else if("replies".equals(action)){
             model.addAttribute("section","replies");

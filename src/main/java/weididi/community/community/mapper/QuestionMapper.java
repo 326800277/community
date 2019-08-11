@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import weididi.community.community.domain.Question;
+import weididi.community.community.dto.QuestionDTO;
 
 import java.util.List;
 
@@ -25,4 +26,7 @@ public interface QuestionMapper {
 
     @Select("select count(1) from question where creator_id=#{userId}")
     Integer countByUserId(@Param(value = "userId") Integer id);
+
+    @Select("select * from question where id=#{id}")
+    Question getById(@Param(value = "id") Integer id);
 }

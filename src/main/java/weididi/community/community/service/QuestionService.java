@@ -39,16 +39,9 @@ public class QuestionService {
         Integer offset=size*(page-1);
         List<Question> questions = questionMapper.list(offset,size);
         List<QuestionDTO> questionDTOlist=new ArrayList<>();
+        //函数封装，消除重复
+        questionAddUser(questionDTOlist,questions);
 
-        for(Question question:questions){
-            //调试会出现无法读入，各种null的现象，这是由于书写不规范？需要 配置中mybatis.configuration.map-underscore-to-camel-case=true
-            User user=userMapper.findById(question.getCreatorId());
-            QuestionDTO questionDTO = new QuestionDTO();
-            //快速复制BEAN对象
-            BeanUtils.copyProperties(question,questionDTO);
-            questionDTO.setUser(user);
-            questionDTOlist.add(questionDTO);
-        }
         pageNationDTO.setQuestions(questionDTOlist);
 
         return pageNationDTO;
@@ -74,6 +67,24 @@ public class QuestionService {
         List<Question> questions = questionMapper.listById(id,offset,size);
         List<QuestionDTO> questionDTOlist=new ArrayList<>();
 
+        questionAddUser(questionDTOlist,questions);
+
+        pageNationDTO.setQuestions(questionDTOlist);
+
+        return pageNationDTO;
+    }
+
+    public QuestionDTO getById(Integer id) {
+        Question question=questionMapper.getById(id);
+        User user=userMapper.findById(question.getCreatorId());
+        QuestionDTO questionDTO = new QuestionDTO();
+        BeanUtils.copyProperties(question,questionDTO);
+        questionDTO.setUser(user);
+        return questionDTO;
+    }
+
+    //实现一个解决重复的功能
+    public void questionAddUser(List<QuestionDTO> questionDTOlist,List<Question> questions){
         for(Question question:questions){
             //调试会出现无法读入，各种null的现象，这是由于书写不规范？需要 配置中mybatis.configuration.map-underscore-to-camel-case=true
             User user=userMapper.findById(question.getCreatorId());
@@ -83,8 +94,5 @@ public class QuestionService {
             questionDTO.setUser(user);
             questionDTOlist.add(questionDTO);
         }
-        pageNationDTO.setQuestions(questionDTOlist);
-
-        return pageNationDTO;
     }
 }
