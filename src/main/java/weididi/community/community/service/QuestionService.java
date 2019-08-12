@@ -29,11 +29,11 @@ public class QuestionService {
         //从数据库获取总共有多少条问题
         Integer totalcount = questionMapper.count();
         //解决输入错误页码的问题
-        if(page<1){
-            page=1;
-        }
         if(page>((totalcount%size)==0?totalcount/size:totalcount/size+1)){
             page=(totalcount%size)==0?totalcount/size:totalcount/size+1;
+        }
+        if(page<1){
+            page=1;
         }
         pageNationDTO.setPagenation(totalcount,page,size);
         Integer offset=size*(page-1);

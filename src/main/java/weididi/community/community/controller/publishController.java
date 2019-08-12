@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import weididi.community.community.domain.Question;
@@ -62,8 +63,22 @@ public class publishController {
         question.setTag(tag);
         question.setCreatorId(user.getId());
         question.setGmtCreate(user.getGmtCreate());
-        question.setGmtModify(user.getGmtModify());
+        question.setGmtModify(System.currentTimeMillis());
         questionMapper.create(question);
         return "redirect:/";
+    }
+
+
+//    不行，还是得做一个修改页面，这个页面不知道为什么没有样式，况且，还要保持发布后question的ID不变
+    @GetMapping("/publish/{questionId}")
+    public String republish(@PathVariable(name="questionId") Integer id,
+                            Model model){
+        Question question = questionMapper.getById(id);
+        model.addAttribute("title",question.getTitle());
+        model.addAttribute("description",question.getDescription());
+        model.addAttribute("tag",question.getTag());
+
+
+        return "publish";
     }
 }

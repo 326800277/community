@@ -1,9 +1,6 @@
 package weididi.community.community.mapper;
 
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import weididi.community.community.domain.User;
 
 @Mapper
@@ -15,5 +12,11 @@ public interface UserMapper {
     User findByToken(@Param("token") String token);
 
     @Select("select * from user where id =#{creatorId}")
-    User findById(Integer creatorId);
+    User findById(@Param("creatorId") Integer creatorId);
+
+    @Select("select * from user where account_id =#{accountId}")
+    User findByAccountId(@Param("accountId") String accountId);
+
+    @Update("update user set name=#{name},token=#{token},gmt_modify=#{gmtModify},avatar_url=#{avatarUrl} where account_id=#{accountId}")
+    void update(User user);
 }

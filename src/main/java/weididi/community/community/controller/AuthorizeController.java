@@ -12,6 +12,7 @@ import weididi.community.community.dto.AccessTokenDTO;
 import weididi.community.community.dto.GithubUser;
 import weididi.community.community.mapper.UserMapper;
 import weididi.community.community.provider.GithubPrivoder;
+import weididi.community.community.service.UserService;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -33,8 +34,9 @@ public class AuthorizeController {
     @Value("${github.redirect.uri}")
     private String Redirect_uri;
 
+
     @Autowired
-    private UserMapper userMapper;
+    private UserService userService;
 
     @GetMapping("/callback")
     public String callback(@RequestParam(name="code")String code,
@@ -64,9 +66,11 @@ public class AuthorizeController {
             user.setGmtCreate(System.currentTimeMillis());
             user.setGmtModify(user.getGmtCreate());
             user.setAvatarUrl(githubUser.getAvatar_url());
-            userMapper.insert(user);
+            userService.createOrUpdate(user);
+            //userMapper.insert(user);
             //保存一个Cookie
             response.addCookie(new Cookie("token",user.getToken()));
+            //在拦截器中设定了Session
             //request.getSession().setAttribute("user",githubUser);
             return "redirect:/";
         }else {
@@ -75,5 +79,15 @@ public class AuthorizeController {
         }
         //System.out.println(githubUser.getName());
         //return "index";
+    }
+
+    @GetMapping("/logout")
+    public String logOut(HttpServletRequest request,
+                         HttpServletResponse response){
+        request.getSession().removeAttribute("user");
+        Cookie cookie=new Cookie("token",null);
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
+        return "redirect:/";
     }
 }
