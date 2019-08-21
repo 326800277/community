@@ -1,4 +1,4 @@
 package weididi.community.community.dto;
 
-public class commentDTO {
+public class CommentDTO {
 }
