@@ -18,11 +18,16 @@ public class IndexController { ;
     @GetMapping("/")
     public String index(Model model,
                         @RequestParam(name="page",defaultValue = "1") Integer page,
-                        @RequestParam(name="size",defaultValue = "5") Integer size){
+                        @RequestParam(name="size",defaultValue = "5") Integer size,
+                        @RequestParam(name="search",required=false) String search){
 
-//        获取带有Question和user相关信息的questionDTO的集合
-        PageNationDTO pageNations=questionService.list(page,size);
+        if(search==""){
+            search=null;
+        }
+//      获取带有Question和user相关信息的questionDTO的集合
+        PageNationDTO pageNations=questionService.list(search,page,size);
         model.addAttribute( "pageNations",pageNations);
+        model.addAttribute("search",search);
         return "index";
     }
 }

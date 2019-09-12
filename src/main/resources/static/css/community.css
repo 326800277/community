@@ -32,3 +32,87 @@ body{
     color:#999;
     font-size: 13px;
 }
+.jumbotron{
+    margin: 50px;
+}
+
+.comment{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.tex-comment{
+    padding-bottom: 5px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.comment-sp{
+    margin-top: 0;
+}
+.sub-comments{
+    border-radius: 5px;
+    margin-top: 10px;
+    border: 1px solid #eee;
+    padding-top: 15px;
+    margin-bottom: 15px;
+}
+
+.btn-reply{
+    float: right;
+    margin-bottom: 10px;
+}
+
+.menu{
+    color: #999;
+    margin-top: 5px;
+}
+.icon{
+    margin-right: 6px;
+    font-size: 15px; /*设置字体尺寸*/
+    cursor: pointer;
+}
+.menu .comment-icon{
+    font-size: 15px; /*设置字体尺寸*/
+    cursor: pointer;
+}
+.menu .comment-icon :hover{
+    color: #499ef3;
+}
+
+.active{
+    color: #499ef3;
+}
+/*鼠标悬浮自动换色*/
+.icon:hover{
+    color: #499ef3;
+}
+
+.glystyle{
+    margin-bottom: 20px;
+    font-size: 17px;
+}
+
+.question-related{
+    line-height: 20px;
+    font-size: 14px;
+    margin-left: 0;
+    list-style: none;
+    padding-left: 0;
+}
+
+.tag-tab{
+    display: none;
+    margin-top:10px ;
+    padding-top: 10px;
+}
+
+.label-info{
+    margin-left: 10px;
+    white-space: normal;
+}
+
+.footer{
+    padding: 10px 20%;
+    color:#666 ;
+}

@@ -1,10 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
+
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
+    <title>威弟弟社区</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!--导入应该有的bootstrap-->
+    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/css/community.css">
+    <script src="/js/jquery-3.4.1.min.js" type="application/javascript"></script>
+    <script src="/js/bootstrap.min.js" type="application/javascript"></script>
 </head>
 <body>
-$END$
+
+<!--使用前端代码块，第一个参数指定html文件，第二个指定所选代码块-->
+<div th:insert="~{navgation::nav}"></div>
+<div class="jumbotron">
+    <h1>出错了!</h1>
+    <!--这个地方，必须是在获取路径中有/{xxx}才会走session域获得message-->
+    <p th:text="${message}"></p>
+    <p><a class="btn btn-primary btn-lg" href="/" role="button">回到主页</a></p>
+</div>
+<div th:insert="~{footer :: foot}"></div>
 </body>
 </html>

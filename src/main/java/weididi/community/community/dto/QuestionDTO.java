@@ -1,7 +1,7 @@
 package weididi.community.community.dto;
 
 import lombok.Data;
-import weididi.community.community.domain.User;
+import weididi.community.community.model.User;
 
 @Data
 public class QuestionDTO {

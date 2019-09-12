@@ -1,16 +1,14 @@
 package weididi.community.community.controller;
 
 
-import org.apache.ibatis.annotations.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import weididi.community.community.domain.User;
+import weididi.community.community.model.User;
 import weididi.community.community.dto.AccessTokenDTO;
 import weididi.community.community.dto.GithubUser;
-import weididi.community.community.mapper.UserMapper;
 import weididi.community.community.provider.GithubPrivoder;
 import weididi.community.community.service.UserService;
 

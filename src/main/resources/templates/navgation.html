@@ -14,9 +14,10 @@
             <a class="navbar-brand" href="/">威弟弟社区</a>
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <form class="navbar-form navbar-left">
+            <form class="navbar-form navbar-left" action="/" method="get">
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="搜索问题">
+                    <!--name="search"  相当于给get上去的数据七个名字，  @RequestParam(name="search",required=false) String search-->
+                    <input type="text" class="form-control" name="search" placeholder="搜索问题">
                 </div>
                 <button type="submit" class="btn btn-default">搜索</button>
             </form>
@@ -29,14 +30,15 @@
                 <li th:if="${session.user!=null}">
                     <a href="/publish">发布</a>
                 </li>
+                <li><a href="/profile/replies">通知<span class="badge" th:text="${session.unReadCount}"></span></a></li>
                 <li class="dropdown" th:if="${session.user!=null}">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                         <span th:text="${session.user.getName()}"></span>
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu" >
-                                <li><a href="/profile/questions">我的问题</a></li>
-                                <li><a href="/logout">退出登录</a></li>
+                        <li><a href="/profile/questions">我的问题</a></li>
+                        <li><a href="/logout">退出登录</a></li>
                     </ul>
                 </li>
             </ul>

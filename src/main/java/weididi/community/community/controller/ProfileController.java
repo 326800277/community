@@ -6,10 +6,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
-import weididi.community.community.domain.User;
+import weididi.community.community.model.User;
 import weididi.community.community.dto.PageNationDTO;
+import weididi.community.community.service.NotificationService;
 import weididi.community.community.service.QuestionService;
 
+import javax.management.Notification;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
@@ -17,6 +19,9 @@ public class ProfileController {
 
     @Autowired
     private QuestionService questionService;
+
+    @Autowired
+    private NotificationService notificationService;
 
     @GetMapping("/profile/{action}")
     public  String profile(@PathVariable(name="action") String action,
@@ -34,13 +39,15 @@ public class ProfileController {
         if("questions".equals(action)){
             model.addAttribute("section","questions");
             model.addAttribute("sectionName","我的问题");
+            PageNationDTO list = questionService.list(user.getId(), page, size);
+            model.addAttribute("pageNations",list);
         }else if("replies".equals(action)){
+            PageNationDTO pageNationDTO =notificationService.list(user.getId(),page,size);
             model.addAttribute("section","replies");
             model.addAttribute("sectionName","最新回复");
+            model.addAttribute("pageNations",pageNationDTO);
         }
 
-        PageNationDTO list = questionService.list(user.getId(), page, size);
-        model.addAttribute("pageNations",list);
         return "profile";
     }
 }

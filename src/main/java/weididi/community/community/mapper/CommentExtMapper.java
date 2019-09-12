@@ -1,7 +1,6 @@
 package weididi.community.community.mapper;
-import weididi.community.community.model.Question;
+import weididi.community.community.model.Comment;
 
-public interface QuestionExtMapper {
-    int incView(Question record);
-    int incCommentCount(Question record);
+public interface CommentExtMapper {
+    int incCommentCount(Comment record);
 }
